@@ -418,3 +418,75 @@ margin-top: 20px;
 }
 
 .perfil-menu li.logout { color: #ff4757; font-weight: bold; justify-content: center; }
+
+.agenda-container { padding: 15px; }
+.calendar-wrapper { background: white; border-radius: 15px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+.calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; }
+.calendar-day { padding: 10px 0; font-size: 0.9rem; border-radius: 8px; position: relative; cursor: pointer; }
+.calendar-day:hover { background: #f0f0f0; }
+
+/* Bolinhas de cores diferentes */
+.dot { height: 6px; width: 6px; border-radius: 50%; display: inline-block; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); }
+.dot-devolver { background-color: #FA5252; } /* Vermelho: Eu devolvo */
+.dot-receber { background-color: #4dabf7; }  /* Azul: Eu recebo */
+
+.event-card { margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 5px solid #333; border-radius: 8px; }
+.event-card.devolver { border-color: #FA5252; }
+.event-card.receber { border-color: #4dabf7; }
+
+.notif-bell { position: relative; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+.badge { position: absolute; top: -5px; right: -5px; background: red; color: white; font-size: 0.6rem; padding: 2px 5px; border-radius: 50%; }
+
+
+.notif-panel {
+    position: fixed; /* Fixado na tela */
+    top: 70px;
+    right: 20px;
+    width: 300px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    z-index: 1000;
+    overflow: hidden;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } }
+
+.notif-header { padding: 12px; background: #f8f9fa; display: flex; justify-content: space-between; font-weight: bold; border-bottom: 1px solid #eee; }
+.notif-header button { border: none; background: none; cursor: pointer; }
+
+.notif-item { padding: 12px; border-bottom: 1px solid #f1f1f1; display: flex; gap: 10px; align-items: flex-start; }
+.notif-avatar { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; }
+.notif-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+.urgente { background: #ff4757; }
+.proximo { background: #ffa502; }
+
+.btn-aceitar {
+    background: var(--secondary); /* Verde UniBook */
+    color: white;
+    border: none;
+    padding: 6px 14px; /* Aumentei um pouco pra destacar */
+    border-radius: 20px; /* Bordas bem redondas */
+    font-size: 0.75rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-aceitar:hover { background: #009c7d; } /* Escurece um pouco no hover */
+
+.btn-recusar {
+    background: var(--primary); /* Roxo UniBook */
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 20px; /* Bordas redondas igual ao aceitar */
+    font-size: 0.75rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-recusar:hover { background: #5a4bcf; } /* Escurece um pouco no hover */
