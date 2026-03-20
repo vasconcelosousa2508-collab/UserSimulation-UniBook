@@ -6,8 +6,8 @@
     <title>UniBook User Simulation</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+
     <div id="Login">
         <div class="login-container">
             <div id="slogan">
@@ -22,282 +22,305 @@
                 <h3>Log in</h3>
                 <input id="email" type="text" placeholder="E-mail institucional"><br>
                 <input id="senha" type="password" placeholder="Senha"><br>
-                <button class="login-btn">Entrar</button>
+                <button class="login-btn" onclick="executarLogin()">Entrar</button>
             </div>
         </div>
     </div>
 
-      <div id="geral">
-        <header class="header">
-        <h1>UniBook</h1>
-    </header>
+    <div id="geral" style="display: none;">
+        
+        <div id="panel-notificacoes" class="notif-panel" style="display:none;">
+            <div class="notif-header">
+                <span>Notificações</span>
+                <button onclick="alternarNotificacoes()">✕</button>
+            </div>
+            <div id="lista-notificacoes" class="notif-body"></div>
+        </div>
 
-    <div id="view-estante" class="main-tab"> 
-        <header class="aba-header">
-            <h1>Minha Estante</h1>
-            <button class="add-btn" onclick="abrirModal()">+</button>
+        <header class="header">
+            <h1>UniBook</h1>
         </header>
 
-        <div class="filter-bar">
-    <button id="btn-tenho" class="filter-item active" onclick="trocarSubAba('aba-meus-livros', this)">Meus Livros</button>
-    <button id="btn-quero" class="filter-item" onclick="trocarSubAba('aba-quero-ler', this)">Quero Ler</button>
-    <button id="btn-emprestados" class="filter-item" onclick="trocarSubAba('aba-emprestados', this)">Emprestados</button>
-</div>
+        <div id="view-estante" class="main-tab"> 
+            <header class="aba-header">
+                <h1>Minha Estante</h1>
+                <button class="add-btn" onclick="abrirModal()">+</button>
+            </header>
 
-        <main class="feed-container">
-    <section id="aba-meus-livros" class="tab-content active">
-        <p class="empty-msg">Nenhum livro na sua estante.</p>
-    </section>
+            <div class="filter-bar">
+                <button id="btn-tenho" class="filter-item active" onclick="trocarSubAba('aba-meus-livros', this)">Meus Livros</button>
+                <button id="btn-quero" class="filter-item" onclick="trocarSubAba('aba-quero-ler', this)">Quero Ler</button>
+                <button id="btn-emprestados" class="filter-item" onclick="trocarSubAba('aba-emprestados', this)">Emprestados</button>
+            </div>
 
-    <section id="aba-quero-ler" class="tab-content">
-        <p class="empty-msg">Sua lista de desejos está vazia.</p>
-    </section>
+            <main class="feed-container">
+                <section id="aba-meus-livros" class="tab-content active"></section>
+                <section id="aba-quero-ler" class="tab-content"></section>
+                <section id="aba-emprestados" class="tab-content"></section>
+            </main>
+        </div>
 
-    <section id="aba-emprestados" class="tab-content">
-        <p class="empty-msg">Você não tem livros emprestados no momento.</p>
-    </section>
-</main>
+        <div id="view-busca" class="main-tab" style="display:none;">
+            <div class="feed-container"><h1>Página de Busca</h1></div>
+        </div>
 
-        <div id="modal-adicionar" class="modal-overlay" style="display: none;">
-            <div class="modal-content">
-                <h2>Adicionar Livro</h2>
-                <input type="text" id="input-titulo" placeholder="Título do Livro">
-                <input type="text" id="input-autor" placeholder="Autor">
-              
-              <select id="select-tipo">
-    <option value="tenho">Eu tenho este livro</option>
-    <option value="desejo">Quero ler este livro</option>
-</select>
-                <div class="modal-buttons">
-                    <button onclick="fecharModal()" class="btn-cancelar">Cancelar</button>
-                    <button onclick="salvarLivro()" class="btn-salvar">Salvar</button>
+        <div id="view-perfil" class="main-tab" style="display:none;">
+            <div class="perfil-container">
+                <section class="perfil-header">
+                    <div class="avatar-wrapper">
+                        <img id="foto-perfil" src="https://static.vecteezy.com/system/resources/thumbnails/027/312/306/small/portrait-of-a-dj-with-headphone-isolated-essential-workers-avatar-icons-characters-for-social-media-and-networking-user-profile-website-and-app-3d-render-illustration-png.png" alt="Avatar">
+                        <label class="btn-editar-foto">✎</label>
+                    </div>
+                    <h2 id="nome-perfil" contenteditable="true">@Lucas</h2>
+                    <p id="email-perfil">carregando...</p>
+                </section>
+
+                <section class="perfil-stats">
+                    <div class="stat-item" onclick="irParaEstante('aba-meus-livros', 'btn-tenho')">
+                        <strong id="count-meus">0</strong><span>Meus Livros</span>
+                    </div>
+                    <div class="stat-item" onclick="irParaEstante('aba-quero-ler', 'btn-quero')">
+                        <strong id="count-quero">0</strong><span>Quero Ler</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong id="count-emprestimos">0</strong><span>Emprestados</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong id="count-devolvidos">0</strong><span>Devolvidos</span>
+                    </div>
+                </section>
+
+                <ul class="perfil-menu">
+                    <li onclick="mostrarMeusEmprestimos()"><span>Histórico</span> ➔</li>
+                    <li class="logout" onclick="window.location.reload()">Sair da Conta</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="view-agenda" class="main-tab" style="display:none;">
+            <header class="aba-header">
+                <h1>Minha Agenda</h1>
+                <button class="notif-bell" onclick="alternarNotificacoes()">
+                    🔔<span id="badge-notif" class="badge">0</span>
+                </button>
+            </header>
+            <div class="agenda-container">
+                <div class="calendar-wrapper">
+                    <div class="calendar-header">
+                        <button onclick="mudarMes(-1)">❮</button>
+                        <h3 id="mes-atual">Março 2026</h3>
+                        <button onclick="mudarMes(1)">❯</button>
+                    </div>
+                    <div class="calendar-grid" id="calendar-grid"></div>
                 </div>
+                <div class="event-details" id="event-details"></div>
+            </div>
+        </div>
+
+        <nav class="tab-bar">
+            <button class="tab-item" onclick="mudarAbaPrincipal('view-busca', this)">🔍<span>Busca</span></button>
+            <button class="tab-item active" onclick="mudarAbaPrincipal('view-estante', this)">📚<span>Estante</span></button>
+            <button class="tab-item" onclick="mudarAbaPrincipal('view-perfil', this)">👤<span>Perfil</span></button>
+            <button class="tab-item" onclick="mudarAbaPrincipal('view-agenda', this)">📅<span>Agenda</span></button>
+        </nav>
+    </div> <div id="modal-adicionar" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h2>Adicionar Livro</h2>
+            <input type="text" id="input-titulo" placeholder="Título">
+            <input type="text" id="input-autor" placeholder="Autor">
+            <select id="select-tipo">
+                <option value="tenho">Eu tenho este livro</option>
+                <option value="desejo">Quero ler este livro</option>
+            </select>
+            <div class="modal-buttons">
+                <button onclick="fecharModal()" class="btn-cancelar">Cancelar</button>
+                <button onclick="salvarLivro()" class="btn-salvar">Salvar</button>
             </div>
         </div>
     </div>
 
-          <div id="view-busca" class="main-tab" style="display:none;">
-        <div class="feed-container"><h1>Página de Busca</h1></div>
-    </div>
+    <script>
+      // 1. Dados e Estado Global
+let emailUsuarioLogado = "";
+let historicoEmprestimos = [];
+let minhaEstante = [
+    { id: 1, titulo: "Castelo nos Ares", autor: "Diana Wynne Jones", status: "tenho" },
+    { id: 2, titulo: "Dom Casmurro", autor: "Machado de Assis", status: "tenho" },
+    { id: 3, titulo: "O extraordinário", autor: "R.J. Palacio", status: "tenho" },
+    { id: 4, titulo: "Dom Quixote", autor: "Miguel de Cervantes", status: "tenho" },
+    { id: 5, titulo: "A divina comédia", autor: "Dante Alighieri", status: "emprestado_fora", usuario: "@AngeloMatos", prazo: "24/03" },
+    { id: 6, titulo: "A Droga da Obediência", autor: "Pedro Bandeira", status: "comigo", usuario: "@ClaraVas", prazo: "20/03" },
+    { id: 7, titulo: "O Espreitador", autor: "A.M. Shine", status: "desejo" },
+    { id: 8, titulo: "Coraline", autor: "Neil Gaiman", status: "desejo" }
+];
+let dataFoco = new Date();
 
-    
-<div id="view-perfil" class="main-tab" style="display:none;">
-    <div class="perfil-container">
+// 2. Login e Inicialização
+function executarLogin() {
+    const email = document.getElementById('email').value;
+    const senha = document.getElementById('senha').value;
+
+    if (email.trim() !== "" && senha.trim() !== "") {
+        emailUsuarioLogado = email;
+        document.getElementById('Login').style.display = 'none';
+        document.getElementById('geral').style.display = 'block';
         
-        <section class="perfil-header">
-            
-            <div class="avatar-wrapper">
-                <img id="foto-perfil" src="https://static.vecteezy.com/system/resources/thumbnails/027/312/306/small/portrait-of-a-dj-with-headphone-isolated-essential-workers-avatar-icons-characters-for-social-media-and-networking-user-profile-website-and-app-3d-render-illustration-png.png" alt="Avatar">
-                <input type="file" id="input-foto" accept="image/*" style="display: none;">
-                <label for="input-foto" class="btn-editar-foto">✎</label>
-            </div>
-            
-            <h2 id="nome-perfil" contenteditable="true" spellcheck="false">@Lucas</h2>
-            
-            <p id="email-perfil">seu.email@institucional.edu.br</p>
-            
-            <button id="btn-salvar-perfil" style="display: none;">Salvar Alterações</button>
-        </section>
+        document.getElementById('nome-perfil').innerText = "@" + email.split('@')[0];
+        document.getElementById('email-perfil').innerText = email;
 
-        <section class="perfil-stats">
-    <div class="stat-item" onclick="irParaEstante('aba-meus-livros', 'btn-tenho')">
-          <strong id="count-meus">0</strong>
-          <span>Meus Livros</span>
-    </div>
-    
-    <div class="stat-item" onclick="irParaEstante('aba-quero-ler', 'btn-quero')">
-        <strong id="count-quero">0</strong>
-        <span>Quero Ler</span>
-    </div>
+        renderizarLivros();
+        renderizarCalendario();
+        atualizarSino();
+    } else {
+        alert("Preencha os dados!");
+    }
+}
 
-    <div class="stat-item">
-        <strong id="count-emprestimos">0</strong>
-        <span>Emprestados</span>
-    </div>
-    
-    <div class="stat-item">
-        <strong id="count-devolvidos">0</strong>
-        <span>Devolvidos</span>
-    </div>
-</section>
+// 3. Notificações Flutuantes
+function alternarNotificacoes() {
+    const painel = document.getElementById('panel-notificacoes');
+    if (painel.style.display === 'none') {
+        renderizarListaNotificacoes();
+        painel.style.display = 'block';
+    } else {
+        painel.style.display = 'none';
+    }
+}
 
-        <ul class="perfil-menu">
-            <li><span>Meus Empréstimos</span> ➔</li>
-            <li class="logout" onclick="window.location.reload()">Sair da Conta</li>
-        </ul>
-    </div>
-</div>
+function renderizarListaNotificacoes() {
+    const lista = document.getElementById('lista-notificacoes');
+    lista.innerHTML = "";
 
-    <div id="view-agenda" class="main-tab" style="display:none;">
-        <div class="feed-container"><h1>Agenda</h1></div>
-    </div>
-    
-    <div id="view-notificacoes" class="main-tab" style="display:none;">
-        <div class="feed-container"><h1>Notificações</h1></div>
-    </div>
-
-    <nav class="tab-bar">
-        <button class="tab-item" onclick="mudarAbaPrincipal('view-busca', this)">🔍<span>Busca</span></button>
-        <button class="tab-item active" onclick="mudarAbaPrincipal('view-estante', this)">📚<span>Estante</span></button>
-        <button class="tab-item" onclick="mudarAbaPrincipal('view-perfil', this)">👤<span>Perfil</span></button>
-        <button class="tab-item" onclick="mudarAbaPrincipal('view-agenda', this)">📅<span>Agenda</span></button>
-        <button class="tab-item" onclick="mudarAbaPrincipal('view-notificacoes', this)">🔔<span>Notificações</span></button>
-    </nav>
-</div>
-
- <script>
-    // 1. Dados Iniciais
-    let emailUsuarioLogado = "";
-    let minhaEstante = [
-        { id: 1, titulo: "Castelo nos Ares", autor: "Diana Wynne Jones", status: "tenho" },
-        { id: 2, titulo: "Dom Casmurro", autor: "Machado de Assis", status: "tenho" },
-        { id: 3, titulo: "O extraordinário", autor: "R.J. Palacio", status: "tenho" },
-        { id: 4, titulo: "Dom Quixote", autor: "Miguel de Cervantes", status: "tenho" },
-        { id: 5, titulo: "A divina comédia", autor: "Dante Alighieri", status: "emprestado_fora", usuario: "@AngeloMatos", prazo: "24/03" },
-        { id: 6, titulo: "A Droga da Obediência", autor: "Pedro Bandeira", status: "comigo", usuario: "@ClaraVas", prazo: "20/03" },
-        { id: 7, titulo: "O Espreitador", autor: "A.M. Shine", status: "desejo" },
-        { id: 8, titulo: "Coraline", autor: "Neil Gaiman", status: "desejo" }
-    ];
-
-    // 2. Eventos ao carregar a página
-    document.addEventListener('DOMContentLoaded', () => {
-        const botaoEntrar = document.querySelector('.login-btn');
-
-        // Lógica de Login
-        botaoEntrar.addEventListener('click', () => {
-            const campoEmail = document.getElementById('email').value;
-            const campoSenha = document.getElementById('senha').value;
-
-            if (campoEmail.trim() !== "" && campoSenha.trim() !== "") {
-                emailUsuarioLogado = campoEmail;
-
-                // Esconde Login e mostra o Geral
-                document.getElementById('Login').style.display = 'none';
-                document.getElementById('geral').style.display = 'block';
-                
-                // Atualiza Perfil
-                const nomeSimulado = emailUsuarioLogado.split('@')[0];
-                document.getElementById('nome-perfil').innerText = "@" + nomeSimulado;
-                document.getElementById('email-perfil').innerText = emailUsuarioLogado;
-
-                // Renderiza os livros na estante
-                renderizarLivros();
-            } else {
-                alert("Por favor, preencha os campos!");
-            }
-        });
-    });
-
-    // 3. Funções de Renderização
-    function renderizarLivros() {
-        const abaMeus = document.getElementById('aba-meus-livros');
-        const abaQuero = document.getElementById('aba-quero-ler');
-        const abaEmprestados = document.getElementById('aba-emprestados');
-
-        // Limpa antes de preencher
-        abaMeus.innerHTML = "";
-        abaQuero.innerHTML = "";
-        abaEmprestados.innerHTML = "";
-
-        minhaEstante.forEach(livro => {
-            let statusTexto = "Disponível na minha estante";
-            let statusClasse = "";
-            let detalheExtra = "";
-
-            if (livro.status === 'emprestado_fora') {
-                statusTexto = `Emprestado para ${livro.usuario}`;
-                statusClasse = "warning";
-                detalheExtra = `<p style="font-size:0.7rem; color:gray;">Devolução: ${livro.prazo}</p>`;
-            } else if (livro.status === 'comigo') {
-                statusTexto = `Peguei com ${livro.usuario}`;
-                statusClasse = "warning";
-                detalheExtra = `<p style="font-size:0.7rem; color:gray;">Prazo: ${livro.prazo}</p>`;
-            } else if (livro.status === 'desejo') {
-                statusTexto = "Na lista de desejos";
-                statusClasse = "warning";
-            }
-
-            // Define se tem lixeira ou aperto de mão
-            let botaoAcao = "";
-            if (livro.status === "tenho" || livro.status === "desejo") {
-                botaoAcao = `
-                    <button class="btn-excluir" onclick="removerLivroDoArray(${livro.id})">
-                        <img src="https://img.icons8.com/fluent-systems-regular/512/FA5252/trash.png" alt="Excluir">
-                    </button>`;
-            } else {
-                botaoAcao = `<span style="font-size: 1.2rem; opacity: 0.3;">🤝</span>`; 
-            }
-
-            const cardHTML = `
-            <section class="post-card">
-                <div class="book-info-wrapper">
-                    <div class="book-cover ${livro.status === 'tenho' ? 'available' : 'borrowed'}"></div>
-                    <div class="book-details">
-                        <p><strong>${livro.titulo}</strong></p>
-                        <p>${livro.autor}</p>
-                        <span class="status-text ${statusClasse}">${statusTexto}</span>
-                        ${detalheExtra}
-                    </div>
+    // Notificação Samara
+    lista.innerHTML += `
+        <div class="notif-item">
+            <img src="https://marketplace.canva.com/Dz63E/MAF4KJDz63E/1/tl/canva-user-icon-MAF4KJDz63E.png" class="notif-avatar">
+            <div class="notif-content">
+                <b>@SamaraRibeiro</b> solicitou o empréstimo de <i>Extraordinário</i>.
+                <div class="notif-btn-group">
+<button class="btn-aceitar" onclick="alert('Pedido Aceito!')">Aceitar</button>
+<button class="btn-recusar" onclick="alternarNotificacoes()">Recusar</button>
                 </div>
-                ${botaoAcao}
-            </section>`;
+            </div>
+        </div>`;
 
-            // Distribui nas abas corretas
-            if (livro.status === "tenho" || livro.status === "emprestado_fora") {
-                abaMeus.innerHTML += cardHTML;
-            } else if (livro.status === "desejo") {
-                abaQuero.innerHTML += cardHTML;
-            } else if (livro.status === "comigo") {
-                abaEmprestados.innerHTML += cardHTML;
+    // Notificações de Prazos (Simulando hoje dia 20)
+    const hoje = 20;
+    minhaEstante.forEach(livro => {
+        if (livro.prazo) {
+            const dia = parseInt(livro.prazo.split('/')[0]);
+            const diff = dia - hoje;
+            let cor = diff === 0 ? "urgente" : (diff > 0 && diff <= 4 ? "proximo" : "");
+            let msg = diff === 0 ? `Vence HOJE: ${livro.titulo}` : (diff > 0 && diff <= 4 ? `Vence em ${diff} dias: ${livro.titulo}` : "");
+
+            if (msg) {
+                lista.innerHTML += `<div class="notif-item"><span class="notif-dot ${cor}"></span><div class="notif-content">${msg}</div></div>`;
             }
-        });
-
-        atualizarContadores();
-    }
-
-    // 4. Funções de Apoio
-    function removerLivroDoArray(id) {
-        if (confirm("Deseja remover este livro?")) {
-            minhaEstante = minhaEstante.filter(l => l.id !== id);
-            renderizarLivros();
         }
-    }
+    });
+}
 
-    function atualizarContadores() {
-        const meus = minhaEstante.filter(l => l.status === 'tenho' || l.status === 'emprestado_fora').length;
-        const quero = minhaEstante.filter(l => l.status === 'desejo').length;
-        const emprestados = minhaEstante.filter(l => l.status === 'comigo').length;
+// 4. Funções da Estante
+function renderizarLivros() {
+    const abas = {
+        'aba-meus-livros': document.getElementById('aba-meus-livros'),
+        'aba-quero-ler': document.getElementById('aba-quero-ler'),
+        'aba-emprestados': document.getElementById('aba-emprestados')
+    };
+
+    Object.values(abas).forEach(a => a.innerHTML = "");
+
+    minhaEstante.forEach(livro => {
+        const card = document.createElement('section');
+        card.className = 'post-card';
         
-        document.getElementById('count-meus').innerText = meus;
-        document.getElementById('count-quero').innerText = quero;
-        document.getElementById('count-emprestimos').innerText = emprestados;
-    }
+        let infoExtra = livro.prazo ? `<p style="font-size:0.7rem; color:gray;">Prazo: ${livro.prazo}</p>` : "";
+        let statusTxt = livro.status === 'tenho' ? 'Disponível' : (livro.status === 'desejo' ? 'Desejado' : `Com ${livro.usuario || 'alguém'}`);
 
-    // 5. Navegação (IDs das Views)
-    function mudarAbaPrincipal(idDaView, botaoClicado) {
-        document.querySelectorAll('.main-tab').forEach(s => s.style.display = 'none');
-        document.getElementById(idDaView).style.display = 'block';
-        document.querySelectorAll('.tab-item').forEach(b => b.classList.remove('active'));
-        botaoClicado.classList.add('active');
-    }
+        card.innerHTML = `
+            <div class="book-info-wrapper">
+                <div class="book-cover ${livro.status === 'tenho' ? 'available' : 'borrowed'}"></div>
+                <div class="book-details">
+                    <p><strong>${livro.titulo}</strong></p>
+                    <p>${livro.autor}</p>
+                    <span class="status-text ${livro.status !== 'tenho' ? 'warning' : ''}">${statusTxt}</span>
+                    ${infoExtra}
+                </div>
+            </div>
+            <button class="btn-excluir" onclick="removerLivro(${livro.id})">🗑️</button>
+        `;
 
-    function trocarSubAba(idSubAba, botaoClicado) {
-        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-        document.getElementById(idSubAba).classList.add('active');
-        document.querySelectorAll('.filter-item').forEach(btn => btn.classList.remove('active'));
-        botaoClicado.classList.add('active');
-    }
+        if (livro.status === 'tenho' || livro.status === 'emprestado_fora') abas['aba-meus-livros'].appendChild(card);
+        else if (livro.status === 'desejo') abas['aba-quero-ler'].appendChild(card);
+        else abas['aba-emprestados'].appendChild(card);
+    });
+    atualizarContadores();
+}
 
-    function irParaEstante(subAbaId, botaoFiltroId) {
-        const btnEstanteNav = document.querySelector('.tab-bar .tab-item:nth-child(2)');
-        mudarAbaPrincipal('view-estante', btnEstanteNav);
-        trocarSubAba(subAbaId, document.getElementById(botaoFiltroId));
+function removerLivro(id) {
+    if(confirm("Excluir livro?")) {
+        minhaEstante = minhaEstante.filter(l => l.id !== id);
+        renderizarLivros();
+        atualizarSino();
     }
+}
 
-    // Modal
-    function abrirModal() { document.getElementById('modal-adicionar').style.display = 'flex'; }
-    function fecharModal() { document.getElementById('modal-adicionar').style.display = 'none'; }
-</script>
-  
+// 5. Auxiliares (Sino, Abas, Contadores)
+function atualizarSino() {
+    const prazos = minhaEstante.filter(l => l.prazo).length;
+    document.getElementById('badge-notif').innerText = 1 + prazos; // 1 da Samara + prazos
+}
+
+function mudarAbaPrincipal(id, btn) {
+    document.querySelectorAll('.main-tab').forEach(v => v.style.display = 'none');
+    document.getElementById(id).style.display = 'block';
+    document.querySelectorAll('.tab-item').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+function trocarSubAba(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.filter-item').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+function irParaEstante(subAba, btnFiltroId) {
+    const btnEstanteNav = document.querySelectorAll('.tab-item')[1];
+    mudarAbaPrincipal('view-estante', btnEstanteNav);
+    trocarSubAba(subAba, document.getElementById(btnFiltroId));
+}
+
+function atualizarContadores() {
+    document.getElementById('count-meus').innerText = minhaEstante.filter(l => l.status === 'tenho' || l.status === 'emprestado_fora').length;
+    document.getElementById('count-quero').innerText = minhaEstante.filter(l => l.status === 'desejo').length;
+    document.getElementById('count-emprestimos').innerText = minhaEstante.filter(l => l.status === 'comigo').length;
+}
+
+function abrirModal() { document.getElementById('modal-adicionar').style.display = 'flex'; }
+function fecharModal() { document.getElementById('modal-adicionar').style.display = 'none'; }
+
+function salvarLivro() {
+    const t = document.getElementById('input-titulo').value;
+    const a = document.getElementById('input-autor').value;
+    const s = document.getElementById('select-tipo').value;
+    if(t && a) {
+        minhaEstante.push({ id: Date.now(), titulo: t, autor: a, status: s });
+        fecharModal();
+        renderizarLivros();
+    }
+}
+
+// 6. Agenda Simplificada
+function renderizarCalendario() {
+    const grid = document.getElementById('calendar-grid');
+    grid.innerHTML = "";
+    for (let i = 1; i <= 31; i++) {
+        const dia = i < 10 ? `0${i}/03` : `${i}/03`;
+        const tem = minhaEstante.find(l => l.prazo === dia);
+        grid.innerHTML += `<div class="calendar-day" onclick="alert('Compromisso dia ${dia}')">${i}${tem ? '<span class="dot dot-devolver"></span>' : ''}</div>`;
+    }
+}
+    </script>
 </body>
 </html>
