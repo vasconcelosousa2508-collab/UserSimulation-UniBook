@@ -1,0 +1,420 @@
+/* --- CONFIGURAÇÕES GERAIS --- */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+:root {
+    --primary: #6c5ce7;
+    --secondary: #00b894;
+    --bg: #f9f9fb;
+    --text: #2d3436;
+    --card: #ffffff;
+    --gray: #b2bec3;
+}
+
+body { 
+    background-color: var(--bg); 
+    color: var(--text); 
+    padding-bottom: 80px; 
+}
+
+/* Esconde a interface principal inicialmente, mostrando apenas a tela de login */
+#geral {
+    display: none;
+}
+
+/* LOGIN */
+#Login {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg);
+}
+
+.login-container {
+    padding: 0;
+}
+
+#slogan { 
+    display: flex;
+    flex-direction: column; /* Faz os filhos (uniao-logo e h4) ficarem em colunas */
+    align-items: center;    /* Centraliza tudo horizontalmente */
+    margin-bottom: 50px;
+}
+
+.uniao-logo {
+    display: flex;
+    align-items: center;    /* Alinha imagem e H1 verticalmente entre si */
+    justify-content: center;
+}
+
+#logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    opacity: 0.8; 
+}
+
+#slogan h1 {
+    font-size: 4.5rem;
+    font-family: 'Segoe UI', sans-serif;
+    color: var(--primary);
+    margin: 0 0 10px 0;
+}
+
+#slogan h4 {
+    font-size: 1.5rem;
+    color: var(--secondary);
+    margin: 0 0 30px 0;
+    margin-bottom: 30px;
+}
+
+#login-form {
+    max-width: 420px;  /* NÃO deixa passar de 450px (tamanho padrão de formulário) */
+    margin: 0 auto;     /* Centraliza horizontalmente */
+    margin-top: 20px;
+    background: white;
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    
+}
+#login-form h3 {
+    color: var(--primary);
+}
+#login-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    outline: none;
+}
+
+#email{
+margin-top: 20px;
+}
+
+.login-btn {
+    text-align: center;
+    background: var(--primary);
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    }
+
+/* --- COMPONENTES DE HEADER --- */
+.header {
+    background: var(--card);
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.header h1 { font-size: 1.2rem; color: var(--primary); }
+
+.aba-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: var(--card);
+}
+.aba-header h1 { font-size: 1.1rem; color: var(--primary); }
+
+.add-btn { 
+    background: var(--primary); 
+    color: white; 
+    border: none; 
+    width: 32px; height: 32px; 
+    border-radius: 50%; 
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* --- FILTROS E ABAS --- */
+.filter-bar {
+    display: flex;
+    justify-content: space-around;
+    background: var(--card);
+    border-bottom: 1px solid #eee;
+}
+.filter-item {
+    border: none; background: none;
+    font-weight: bold; color: var(--gray);
+    font-size: 0.9rem; padding: 12px 0;
+    width: 50%; transition: 0.3s;
+}
+.filter-item.active {
+    color: var(--primary);
+    border-bottom: 3px solid var(--primary);
+}
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* --- CARDS DE LIVROS --- */
+.feed-container { padding: 15px; }
+.post-card {
+    display: flex; 
+    justify-content: space-between; /* Empurra o conteúdo pros cantos opostos */
+    align-items: center;            /* Alinha o ícone da lixeira verticalmente no meio */
+    background: var(--card);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+.book-info-wrapper {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.book-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.book-mini { display: flex; gap: 15px; }
+.book-cover { width: 60px; height: 90px; border-radius: 6px; }
+.book-cover.available { background: var(--secondary); }
+.book-cover.borrowed { background: var(--primary); opacity: 0.6; }
+
+.status-text { font-size: 0.75rem; color: var(--secondary); font-weight: bold; }
+.status-text.warning { color: var(--primary); }
+
+.btn-excluir {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px; /* Aumenta a área de clique, melhor pro celular */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-excluir img {
+    width: 22px; 
+    height: 22px;
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+.btn-excluir:hover img {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* --- AÇÕES E ÍCONES --- */
+.post-actions {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid #f1f2f6;
+    display: flex; gap: 15px;
+}
+.post-actions span {
+    display: flex; align-items: center;
+    font-size: 0.8rem; color: var(--text);
+}
+.icon-small {
+    width: 16px; height: 16px;
+    margin-right: 6px; object-fit: contain;
+}
+
+/* --- MENU INFERIOR --- */
+.tab-bar {
+    position: fixed;
+    bottom: 0; width: 100%; height: 65px;
+    background: var(--card);
+    display: flex; justify-content: space-around; align-items: center;
+    border-top: 1px solid #eee;
+    z-index: 30;
+}
+.tab-item { 
+    border: none; background: none; 
+    display: flex; flex-direction: column; align-items: center; 
+    font-size: 0.7rem; color: var(--gray); 
+}
+.tab-item.active { color: var(--primary); font-weight: bold; }
+
+/* --- SISTEMA DE MODAL --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 100;
+}
+.modal-content {
+    background: white; padding: 25px;
+    border-radius: 24px; width: 85%; max-width: 400px;
+}
+.modal-content h2 { margin-bottom: 15px; color: var(--primary); font-size: 1.2rem; }
+.modal-content input, .modal-content select {
+    width: 100%; padding: 12px; margin-bottom: 10px;
+    border: 1px solid #ddd; border-radius: 12px; outline: none;
+}
+.modal-buttons { display: flex; gap: 10px; margin-top: 10px; }
+
+.btn-salvar { background: var(--primary); color: white; border: none; flex: 1; padding: 12px; border-radius: 12px; font-weight: bold; }
+.btn-cancelar { background: #eee; color: var(--text); border: none; flex: 1; padding: 12px; border-radius: 12px; }
+
+.empty-msg { text-align: center; color: var(--gray); margin-top: 50px; font-size: 0.9rem; }
+
+/* --- ESTILOS DO PERFIL --- */
+.perfil-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.perfil-header {
+    text-align: center;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+/* Container da Foto e Botão de Editar */
+.avatar-wrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 15px;
+}
+
+#foto-perfil {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--primary);
+    background: white;
+}
+
+/* O lapisinho no canto da foto */
+.btn-editar-foto {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: var(--secondary);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.btn-editar-foto:hover { background: var(--primary); transform: scale(1.1); }
+
+/* Nome Editável */
+#nome-perfil {
+    font-size: 1.8rem;
+    color: var(--text);
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: 2px solid transparent; /* Invisível até o hover */
+    transition: 0.3s;
+}
+
+/* Feedback visual de que é editável */
+#nome-perfil:hover {
+    background: #eeeeee80;
+    border-color: #ddd;
+    cursor: text;
+}
+
+/* Quando o usuário está digitando */
+#nome-perfil:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 0 3px #6c5ce730;
+}
+
+#email-perfil {
+    color: var(--gray);
+    font-size: 0.9rem;
+    margin-top: -5px;
+    margin-bottom: 15px;
+}
+
+/* Botão Salvar */
+#btn-salvar-perfil {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- Stats e Menu (Mantidos) --- */
+.perfil-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
+    gap: 15px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.stat-item {
+    background: white;
+    padding: 20px 10px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    cursor: pointer; /* Indica que é clicável */
+    transition: transform 0.2s;
+}
+
+.stat-item:active {
+    transform: scale(0.95); /* Efeito de clique */
+}
+
+.stat-item strong { 
+    display: block; 
+    font-size: 1.8rem; 
+    color: var(--primary); 
+}
+
+.stat-item span { 
+    font-size: 0.75rem; 
+    color: var(--gray); 
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.perfil-menu {
+    width: 100%; list-style: none; background: white;
+    border-radius: 16px; overflow: hidden;
+}
+
+.perfil-menu li {
+    padding: 15px 20px; border-bottom: 1px solid #f9f9fb;
+    display: flex; justify-content: space-between; cursor: pointer;
+}
+
+.perfil-menu li.logout { color: #ff4757; font-weight: bold; justify-content: center; }

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniBook User Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="Login">
+        <div class="login-container">
+            <div id="slogan">
+                <div class="uniao-logo">
+                    <img id="logo" src="https://makemoneyunstoppable.com/wp-content/uploads/2025/07/open-book-2.png" alt="Logo UniBook">
+                    <h1>UniBook</h1>
+                </div>
+                <h4>Mergulhe no mundo dos livros</h4>
+            </div>
+
+            <div id="login-form">
+                <h3>Log in</h3>
+                <input id="email" type="text" placeholder="E-mail institucional"><br>
+                <input id="senha" type="password" placeholder="Senha"><br>
+                <button class="login-btn">Entrar</button>
+            </div>
+        </div>
+    </div>
+
+      <div id="geral">
+        <header class="header">
+        <h1>UniBook</h1>
+    </header>
+
+    <div id="view-estante" class="main-tab"> 
+        <header class="aba-header">
+            <h1>Minha Estante</h1>
+            <button class="add-btn" onclick="abrirModal()">+</button>
+        </header>
+
+        <div class="filter-bar">
+    <button id="btn-tenho" class="filter-item active" onclick="trocarSubAba('aba-meus-livros', this)">Meus Livros</button>
+    <button id="btn-quero" class="filter-item" onclick="trocarSubAba('aba-quero-ler', this)">Quero Ler</button>
+    <button id="btn-emprestados" class="filter-item" onclick="trocarSubAba('aba-emprestados', this)">Emprestados</button>
+</div>
+
+        <main class="feed-container">
+    <section id="aba-meus-livros" class="tab-content active">
+        <p class="empty-msg">Nenhum livro na sua estante.</p>
+    </section>
+
+    <section id="aba-quero-ler" class="tab-content">
+        <p class="empty-msg">Sua lista de desejos está vazia.</p>
+    </section>
+
+    <section id="aba-emprestados" class="tab-content">
+        <p class="empty-msg">Você não tem livros emprestados no momento.</p>
+    </section>
+</main>
+
+        <div id="modal-adicionar" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <h2>Adicionar Livro</h2>
+                <input type="text" id="input-titulo" placeholder="Título do Livro">
+                <input type="text" id="input-autor" placeholder="Autor">
+              
+              <select id="select-tipo">
+    <option value="tenho">Eu tenho este livro</option>
+    <option value="desejo">Quero ler este livro</option>
+</select>
+                <div class="modal-buttons">
+                    <button onclick="fecharModal()" class="btn-cancelar">Cancelar</button>
+                    <button onclick="salvarLivro()" class="btn-salvar">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+          <div id="view-busca" class="main-tab" style="display:none;">
+        <div class="feed-container"><h1>Página de Busca</h1></div>
+    </div>
+
+    
+<div id="view-perfil" class="main-tab" style="display:none;">
+    <div class="perfil-container">
+        
+        <section class="perfil-header">
+            
+            <div class="avatar-wrapper">
+                <img id="foto-perfil" src="https://static.vecteezy.com/system/resources/thumbnails/027/312/306/small/portrait-of-a-dj-with-headphone-isolated-essential-workers-avatar-icons-characters-for-social-media-and-networking-user-profile-website-and-app-3d-render-illustration-png.png" alt="Avatar">
+                <input type="file" id="input-foto" accept="image/*" style="display: none;">
+                <label for="input-foto" class="btn-editar-foto">✎</label>
+            </div>
+            
+            <h2 id="nome-perfil" contenteditable="true" spellcheck="false">@Lucas</h2>
+            
+            <p id="email-perfil">seu.email@institucional.edu.br</p>
+            
+            <button id="btn-salvar-perfil" style="display: none;">Salvar Alterações</button>
+        </section>
+
+        <section class="perfil-stats">
+    <div class="stat-item" onclick="irParaEstante('aba-meus-livros', 'btn-tenho')">
+          <strong id="count-meus">0</strong>
+          <span>Meus Livros</span>
+    </div>
+    
+    <div class="stat-item" onclick="irParaEstante('aba-quero-ler', 'btn-quero')">
+        <strong id="count-quero">0</strong>
+        <span>Quero Ler</span>
+    </div>
+
+    <div class="stat-item">
+        <strong id="count-emprestimos">0</strong>
+        <span>Emprestados</span>
+    </div>
+    
+    <div class="stat-item">
+        <strong id="count-devolvidos">0</strong>
+        <span>Devolvidos</span>
+    </div>
+</section>
+
+        <ul class="perfil-menu">
+            <li><span>Meus Empréstimos</span> ➔</li>
+            <li class="logout" onclick="window.location.reload()">Sair da Conta</li>
+        </ul>
+    </div>
+</div>
+
+    <div id="view-agenda" class="main-tab" style="display:none;">
+        <div class="feed-container"><h1>Agenda</h1></div>
+    </div>
+    
+    <div id="view-notificacoes" class="main-tab" style="display:none;">
+        <div class="feed-container"><h1>Notificações</h1></div>
+    </div>
+
+    <nav class="tab-bar">
+        <button class="tab-item" onclick="mudarAbaPrincipal('view-busca', this)">🔍<span>Busca</span></button>
+        <button class="tab-item active" onclick="mudarAbaPrincipal('view-estante', this)">📚<span>Estante</span></button>
+        <button class="tab-item" onclick="mudarAbaPrincipal('view-perfil', this)">👤<span>Perfil</span></button>
+        <button class="tab-item" onclick="mudarAbaPrincipal('view-agenda', this)">📅<span>Agenda</span></button>
+        <button class="tab-item" onclick="mudarAbaPrincipal('view-notificacoes', this)">🔔<span>Notificações</span></button>
+    </nav>
+</div>
+
+ <script>
+    // 1. Dados Iniciais
+    let emailUsuarioLogado = "";
+    let minhaEstante = [
+        { id: 1, titulo: "Castelo nos Ares", autor: "Diana Wynne Jones", status: "tenho" },
+        { id: 2, titulo: "Dom Casmurro", autor: "Machado de Assis", status: "tenho" },
+        { id: 3, titulo: "O extraordinário", autor: "R.J. Palacio", status: "tenho" },
+        { id: 4, titulo: "Dom Quixote", autor: "Miguel de Cervantes", status: "tenho" },
+        { id: 5, titulo: "A divina comédia", autor: "Dante Alighieri", status: "emprestado_fora", usuario: "@AngeloMatos", prazo: "24/03" },
+        { id: 6, titulo: "A Droga da Obediência", autor: "Pedro Bandeira", status: "comigo", usuario: "@ClaraVas", prazo: "20/03" },
+        { id: 7, titulo: "O Espreitador", autor: "A.M. Shine", status: "desejo" },
+        { id: 8, titulo: "Coraline", autor: "Neil Gaiman", status: "desejo" }
+    ];
+
+    // 2. Eventos ao carregar a página
+    document.addEventListener('DOMContentLoaded', () => {
+        const botaoEntrar = document.querySelector('.login-btn');
+
+        // Lógica de Login
+        botaoEntrar.addEventListener('click', () => {
+            const campoEmail = document.getElementById('email').value;
+            const campoSenha = document.getElementById('senha').value;
+
+            if (campoEmail.trim() !== "" && campoSenha.trim() !== "") {
+                emailUsuarioLogado = campoEmail;
+
+                // Esconde Login e mostra o Geral
+                document.getElementById('Login').style.display = 'none';
+                document.getElementById('geral').style.display = 'block';
+                
+                // Atualiza Perfil
+                const nomeSimulado = emailUsuarioLogado.split('@')[0];
+                document.getElementById('nome-perfil').innerText = "@" + nomeSimulado;
+                document.getElementById('email-perfil').innerText = emailUsuarioLogado;
+
+                // Renderiza os livros na estante
+                renderizarLivros();
+            } else {
+                alert("Por favor, preencha os campos!");
+            }
+        });
+    });
+
+    // 3. Funções de Renderização
+    function renderizarLivros() {
+        const abaMeus = document.getElementById('aba-meus-livros');
+        const abaQuero = document.getElementById('aba-quero-ler');
+        const abaEmprestados = document.getElementById('aba-emprestados');
+
+        // Limpa antes de preencher
+        abaMeus.innerHTML = "";
+        abaQuero.innerHTML = "";
+        abaEmprestados.innerHTML = "";
+
+        minhaEstante.forEach(livro => {
+            let statusTexto = "Disponível na minha estante";
+            let statusClasse = "";
+            let detalheExtra = "";
+
+            if (livro.status === 'emprestado_fora') {
+                statusTexto = `Emprestado para ${livro.usuario}`;
+                statusClasse = "warning";
+                detalheExtra = `<p style="font-size:0.7rem; color:gray;">Devolução: ${livro.prazo}</p>`;
+            } else if (livro.status === 'comigo') {
+                statusTexto = `Peguei com ${livro.usuario}`;
+                statusClasse = "warning";
+                detalheExtra = `<p style="font-size:0.7rem; color:gray;">Prazo: ${livro.prazo}</p>`;
+            } else if (livro.status === 'desejo') {
+                statusTexto = "Na lista de desejos";
+                statusClasse = "warning";
+            }
+
+            // Define se tem lixeira ou aperto de mão
+            let botaoAcao = "";
+            if (livro.status === "tenho" || livro.status === "desejo") {
+                botaoAcao = `
+                    <button class="btn-excluir" onclick="removerLivroDoArray(${livro.id})">
+                        <img src="https://img.icons8.com/fluent-systems-regular/512/FA5252/trash.png" alt="Excluir">
+                    </button>`;
+            } else {
+                botaoAcao = `<span style="font-size: 1.2rem; opacity: 0.3;">🤝</span>`; 
+            }
+
+            const cardHTML = `
+            <section class="post-card">
+                <div class="book-info-wrapper">
+                    <div class="book-cover ${livro.status === 'tenho' ? 'available' : 'borrowed'}"></div>
+                    <div class="book-details">
+                        <p><strong>${livro.titulo}</strong></p>
+                        <p>${livro.autor}</p>
+                        <span class="status-text ${statusClasse}">${statusTexto}</span>
+                        ${detalheExtra}
+                    </div>
+                </div>
+                ${botaoAcao}
+            </section>`;
+
+            // Distribui nas abas corretas
+            if (livro.status === "tenho" || livro.status === "emprestado_fora") {
+                abaMeus.innerHTML += cardHTML;
+            } else if (livro.status === "desejo") {
+                abaQuero.innerHTML += cardHTML;
+            } else if (livro.status === "comigo") {
+                abaEmprestados.innerHTML += cardHTML;
+            }
+        });
+
+        atualizarContadores();
+    }
+
+    // 4. Funções de Apoio
+    function removerLivroDoArray(id) {
+        if (confirm("Deseja remover este livro?")) {
+            minhaEstante = minhaEstante.filter(l => l.id !== id);
+            renderizarLivros();
+        }
+    }
+
+    function atualizarContadores() {
+        const meus = minhaEstante.filter(l => l.status === 'tenho' || l.status === 'emprestado_fora').length;
+        const quero = minhaEstante.filter(l => l.status === 'desejo').length;
+        const emprestados = minhaEstante.filter(l => l.status === 'comigo').length;
+        
+        document.getElementById('count-meus').innerText = meus;
+        document.getElementById('count-quero').innerText = quero;
+        document.getElementById('count-emprestimos').innerText = emprestados;
+    }
+
+    // 5. Navegação (IDs das Views)
+    function mudarAbaPrincipal(idDaView, botaoClicado) {
+        document.querySelectorAll('.main-tab').forEach(s => s.style.display = 'none');
+        document.getElementById(idDaView).style.display = 'block';
+        document.querySelectorAll('.tab-item').forEach(b => b.classList.remove('active'));
+        botaoClicado.classList.add('active');
+    }
+
+    function trocarSubAba(idSubAba, botaoClicado) {
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        document.getElementById(idSubAba).classList.add('active');
+        document.querySelectorAll('.filter-item').forEach(btn => btn.classList.remove('active'));
+        botaoClicado.classList.add('active');
+    }
+
+    function irParaEstante(subAbaId, botaoFiltroId) {
+        const btnEstanteNav = document.querySelector('.tab-bar .tab-item:nth-child(2)');
+        mudarAbaPrincipal('view-estante', btnEstanteNav);
+        trocarSubAba(subAbaId, document.getElementById(botaoFiltroId));
+    }
+
+    // Modal
+    function abrirModal() { document.getElementById('modal-adicionar').style.display = 'flex'; }
+    function fecharModal() { document.getElementById('modal-adicionar').style.display = 'none'; }
+</script>
+  
+</body>
+</html>
